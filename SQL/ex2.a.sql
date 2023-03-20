@@ -5,19 +5,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema ex2a
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema ex2a
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `ex2a` ;
+USE `ex2a` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Pacient`
+-- Table `ex2a`.`Pacient`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Pacient` (
+CREATE TABLE IF NOT EXISTS `ex2a`.`Pacient` (
   `idPacient` INT NOT NULL,
   `Nombre` VARCHAR(45) NOT NULL,
   `Apellidos` VARCHAR(45) NOT NULL,
@@ -31,9 +31,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Medico`
+-- Table `ex2a`.`Medico`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Medico` (
+CREATE TABLE IF NOT EXISTS `ex2a`.`Medico` (
   `NombreColegiado` INT NOT NULL,
   `Nombre` VARCHAR(45) NOT NULL,
   `Apellidos` INT NOT NULL,
@@ -44,9 +44,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Consulta`
+-- Table `ex2a`.`Consulta`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Consulta` (
+CREATE TABLE IF NOT EXISTS `ex2a`.`Consulta` (
   `Paciente NumeroSegSocial` INT NOT NULL,
   `Metge` INT NOT NULL,
   `Pacient_idPacient` INT NOT NULL,
@@ -58,12 +58,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Consulta` (
   INDEX `fk_Consulta_Medico1_idx` (`Medico_NombreColegiado` ASC) VISIBLE,
   CONSTRAINT `fk_Consulta_Pacient1`
     FOREIGN KEY (`Pacient_idPacient` , `Pacient_Consulta_Pacient`)
-    REFERENCES `mydb`.`Pacient` (`idPacient` , `Consulta_Pacient`)
+    REFERENCES `ex2a`.`Pacient` (`idPacient` , `Consulta_Pacient`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Consulta_Medico1`
     FOREIGN KEY (`Medico_NombreColegiado`)
-    REFERENCES `mydb`.`Medico` (`NombreColegiado`)
+    REFERENCES `ex2a`.`Medico` (`NombreColegiado`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
