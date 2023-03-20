@@ -19,25 +19,27 @@ USE `mydb` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Pacient` (
   `idPacient` INT NOT NULL,
-  `Nom` VARCHAR(45) NOT NULL,
-  `NumeroSegSocial` INT NOT NULL,
-  `Cognoms` VARCHAR(45) NOT NULL,
-  `DNI/NIE/Passaport` VARCHAR(45) NULL,
-  PRIMARY KEY (`idPacient`, `NumeroSegSocial`),
-  UNIQUE INDEX `NumeroSegSocial_UNIQUE` (`NumeroSegSocial` ASC) VISIBLE)
+  `Nombre` VARCHAR(45) NOT NULL,
+  `Apellidos` VARCHAR(45) NOT NULL,
+  `DNI` VARCHAR(45) NOT NULL,
+  `NIE` VARCHAR(45) NOT NULL,
+  `Consulta_Pacient` INT NOT NULL,
+  PRIMARY KEY (`idPacient`, `Consulta_Pacient`),
+  UNIQUE INDEX `idPacient_UNIQUE` (`idPacient` ASC) VISIBLE,
+  UNIQUE INDEX `Consulta_Pacient_UNIQUE` (`Consulta_Pacient` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Metge`
+-- Table `mydb`.`Medico`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Metge` (
-  `NumCol·legiat` INT NOT NULL,
-  `Nom` VARCHAR(45) NOT NULL,
-  `Cognoms` VARCHAR(45) NOT NULL,
-  `DNI/NIE/Passaport` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`NumCol·legiat`),
-  UNIQUE INDEX `NumCol·legiat_UNIQUE` (`NumCol·legiat` ASC) VISIBLE)
+CREATE TABLE IF NOT EXISTS `mydb`.`Medico` (
+  `NombreColegiado` INT NOT NULL,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `Apellidos` INT NOT NULL,
+  `DNI/NIE/Pasaporte` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`NombreColegiado`),
+  UNIQUE INDEX `NombreColegiado_UNIQUE` (`NombreColegiado` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -45,19 +47,23 @@ ENGINE = InnoDB;
 -- Table `mydb`.`Consulta`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Consulta` (
+  `Paciente NumeroSegSocial` INT NOT NULL,
+  `Metge` INT NOT NULL,
   `Pacient_idPacient` INT NOT NULL,
-  `Pacient_NumeroSegSocial` INT NOT NULL,
-  `Metge_NumCol·legiat` INT NOT NULL,
-  INDEX `fk_Consulta_Pacient_idx` (`Pacient_idPacient` ASC, `Pacient_NumeroSegSocial` ASC) VISIBLE,
-  INDEX `fk_Consulta_Metge1_idx` (`Metge_NumCol·legiat` ASC) VISIBLE,
-  CONSTRAINT `fk_Consulta_Pacient`
-    FOREIGN KEY (`Pacient_idPacient` , `Pacient_NumeroSegSocial`)
-    REFERENCES `mydb`.`Pacient` (`idPacient` , `NumeroSegSocial`)
+  `Pacient_Consulta_Pacient` INT NOT NULL,
+  `Medico_NombreColegiado` INT NOT NULL,
+  PRIMARY KEY (`Paciente NumeroSegSocial`),
+  UNIQUE INDEX `Paciente NumeroSegSocial_UNIQUE` (`Paciente NumeroSegSocial` ASC) VISIBLE,
+  INDEX `fk_Consulta_Pacient1_idx` (`Pacient_idPacient` ASC, `Pacient_Consulta_Pacient` ASC) VISIBLE,
+  INDEX `fk_Consulta_Medico1_idx` (`Medico_NombreColegiado` ASC) VISIBLE,
+  CONSTRAINT `fk_Consulta_Pacient1`
+    FOREIGN KEY (`Pacient_idPacient` , `Pacient_Consulta_Pacient`)
+    REFERENCES `mydb`.`Pacient` (`idPacient` , `Consulta_Pacient`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Consulta_Metge1`
-    FOREIGN KEY (`Metge_NumCol·legiat`)
-    REFERENCES `mydb`.`Metge` (`NumCol·legiat`)
+  CONSTRAINT `fk_Consulta_Medico1`
+    FOREIGN KEY (`Medico_NombreColegiado`)
+    REFERENCES `mydb`.`Medico` (`NombreColegiado`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
